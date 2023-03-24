@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostDetailResource;
 use App\Http\Resources\PostResource;
 use App\Models\Film as ModelsFilm;
 use Illuminate\Http\Request;
@@ -13,5 +14,9 @@ class FilmController extends Controller
         $posts=ModelsFilm::all();
         //return response()->json($posts);
         return PostResource::collection($posts);
+    }
+    public function show($id){
+        $post = ModelsFilm::findOrFail($id);
+        return new PostDetailResource($post);
     }
 }
