@@ -16,6 +16,10 @@ class FilmController extends Controller
         return PostResource::collection($posts);
     }
     public function show($id){
+        $post = ModelsFilm::with('writer:id,username')->findOrFail($id);
+        return new PostDetailResource($post);
+    }
+    public function show2($id){
         $post = ModelsFilm::findOrFail($id);
         return new PostDetailResource($post);
     }

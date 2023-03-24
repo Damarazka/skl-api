@@ -20,7 +20,9 @@ class PostDetailResource extends JsonResource
             'title'=>$this->title,
             'main_genre'=>$this->main_genre,
             'synopsis'=>$this->synopsis,
-            'author'=>$this->author,
+            //'author'=>$this->author,
+            'author_id' => $this->author,
+            'writer' => $this->whenLoaded('writer'),
             'created_at' => date_format($this->created_at, "Y/m/d H:i:s"),
         ];
     }
