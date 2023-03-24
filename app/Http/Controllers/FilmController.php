@@ -37,4 +37,17 @@ class FilmController extends Controller
         $post = ModelsFilm::create($request->all());
         return new PostDetailResource($post->loadMissing('writer:id,username'));
     }
+    public function update(Request $request, $id){
+        $request -> validate([
+            'title' => 'required|max:255',
+            'main_genre' => 'required',
+            'synopsis'=>'required'
+        ]);
+
+        $post= ModelsFilm::findOrFail($id);
+        $post->update($request->all());
+        return response()->json('sudah dapat digunakan');
+
+    }
+
 }

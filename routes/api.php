@@ -11,6 +11,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::get('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/me', [AuthenticationController::class, 'me']);
     Route::post('/posts', [FilmController::class, 'store']);
+    Route::patch('/posts/{id}', [FilmController::class, 'update']);
 });
 
 
