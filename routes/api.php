@@ -10,7 +10,8 @@ Route::get('/posts/{id}',[FilmController::class,'show'])->middleware('auth:sanct
 Route::get('/posts2/{id}', [FilmController::class, 'show2']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::get('/logout', [AuthenticationController::class, 'logout'])->middleware('auth:sanctum');
-;
+Route::get('/me', [AuthenticationController::class, 'me'])->middleware('auth:sanctum');
+
 
 
 
