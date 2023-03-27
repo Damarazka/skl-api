@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RatingResource;
 use Illuminate\Http\Request;
 use App\Models\rating;
 
@@ -20,9 +21,8 @@ class ratingController extends Controller
 
         $rating = Rating::create($request->all());
 
-        return response()->json($rating);
-
-    
+        //return response()->json($rating);
+        return new RatingResource($rating->loadMissing(['evaluator:id,username']));
     }
     
 }
