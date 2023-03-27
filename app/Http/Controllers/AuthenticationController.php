@@ -6,10 +6,25 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Unique;
 use Illuminate\Validation\ValidationException;
 
 class AuthenticationController extends Controller
 {
+    public function register(Request $request){
+        $validateData=$request->validate([
+            'email'=>'email|required|unique:users',
+            'username'=>'required|max:255',
+            'password'=>'required',
+            'firstname'=>'required|max:255',
+            'lastname'=>'required|max:255',
+        ]);
+        $validateData['password'] = Hash::make($request->password);
+        $user = User::create($validateData);
+        $accessToken = $user->createToken('authToken')->accessToken;
+        return response()->json(['user'=>$user,'access_token'=>$accessToken],201);
+    }
+
     public function login(Request $request){
         $request -> validate([
             'email' => 'required|email',
