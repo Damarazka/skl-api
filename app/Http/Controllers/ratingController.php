@@ -36,4 +36,10 @@ class ratingController extends Controller
 
         return new RatingResource($rating->loadMissing(['evaluator:id,username']));
     }
+    public function delete($id){
+        $rating = rating::findorFail($id);
+        $rating->delete();
+        return new RatingResource($rating->loadMissing(['evaluator:id,username']));
+
+    }
 }
