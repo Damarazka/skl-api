@@ -15,10 +15,11 @@ class FilmController extends Controller
     public function index(){
         $posts=ModelsFilm::all();
         //return response()->json($posts);
-        return PostResource::collection($posts);
+        //return PostResource::collection($posts);
+        return PostDetailResource::collection($posts->loadMissing('writer:id,username', 'ratings:id,film_id,user_id,rating_story,rating_character,rating_background_scene,rating_moral_message'));
     }
     public function show($id){
-        $post = ModelsFilm::with('writer:id,username')->findOrFail($id);
+        $post = ModelsFilm::with('writer:id,username','ratings:id,film_id,user_id,rating_story,rating_character,rating_background_scene,rating_moral_message')->findOrFail($id);
         return new PostDetailResource($post);
     }
     public function show2($id){

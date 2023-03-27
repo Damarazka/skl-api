@@ -23,6 +23,15 @@ class PostDetailResource extends JsonResource
             //'author'=>$this->author,
             'author_id' => $this->author,
             'writer' => $this->whenLoaded('writer'),
+            'rating_total' => $this->whenLoaded('ratings', function(){
+                return count($this->ratings);
+            }),
+            'ratings' => $this->whenLoaded('ratings', function(){
+                return collect($this->ratings)->each(function($rating){
+                    $rating->evaluator;
+                    return $rating;
+                });
+            }),
             'created_at' => date_format($this->created_at, "Y/m/d H:i:s"),
         ];
     }
