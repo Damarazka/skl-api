@@ -18,6 +18,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::patch('/posts/{id}', [FilmController::class, 'update'])->middleware(['film.owner']);
     Route::delete('/posts/{id}', [FilmController::class, 'delete'])->middleware(['film.owner']);
     Route::post('/rating', [ratingController::class, 'store']);
+    Route::patch('/rating/{id}', [ratingController::class, 'update'])->middleware(['rating.owner']);
 });
 
 

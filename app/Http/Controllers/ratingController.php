@@ -24,5 +24,16 @@ class ratingController extends Controller
         //return response()->json($rating);
         return new RatingResource($rating->loadMissing(['evaluator:id,username']));
     }
-    
+    public function update(Request $request, $id){
+        $request->validate([
+            'rating_story' => 'required',
+            'rating_character' => 'required',
+            'rating_background_scene' => 'required',
+            'rating_moral_message' => 'required',
+            ]);
+        $rating = rating::findOrFail($id);
+        $rating->update($request->all());
+
+        return new RatingResource($rating->loadMissing(['evaluator:id,username']));
+    }
 }
