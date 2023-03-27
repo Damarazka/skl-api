@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\FilmOwner;
 use App\Http\Resources\PostDetailResource;
 use App\Http\Resources\PostResource;
 use App\Models\Film as ModelsFilm;
@@ -46,8 +47,16 @@ class FilmController extends Controller
 
         $post= ModelsFilm::findOrFail($id);
         $post->update($request->all());
-        return response()->json('sudah dapat digunakan');
-
+        //return response()->json('sudah dapat digunakan');
+        return new PostDetailResource($post->loadMissing('writer:id,username'));
     }
 
+    public function delete($id){
+        $post = ModelsFilm::findOrFail($id);
+        $post->delete();
+
+        return response()->json([
+            'message' => "udah ke hapus"
+        ]);
+    }
 }

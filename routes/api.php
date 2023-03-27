@@ -4,6 +4,8 @@ use App\Http\Controllers\FilmController;
 use App\Http\Controllers\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ratingController;
+
 
 
 
@@ -13,8 +15,9 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::get('/logout', [AuthenticationController::class, 'logout']);
     Route::get('/me', [AuthenticationController::class, 'me']);
     Route::post('/posts', [FilmController::class, 'store']);
-    Route::patch('/posts/{id}', [FilmController::class, 'update']);
     Route::patch('/posts/{id}', [FilmController::class, 'update'])->middleware(['film.owner']);
+    Route::delete('/posts/{id}', [FilmController::class, 'delete'])->middleware(['film.owner']);
+    Route::post('/rating', [ratingController::class, 'store']);
 });
 
 
